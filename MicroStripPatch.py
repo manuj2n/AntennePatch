@@ -54,8 +54,5 @@ print ("Impedance de la ligne: ", Z1)
 # Impedance Z0 = 300 * cos^2 ((pi * x) / L)
 # pour Z0 = 50 ohms
 
-Z = 300 * (math.cos((3.14 * Xf2)/L) * math.cos((3.14 * Xf2)/L))
-print "Impedance : ", Z
-
 Yf = W / 2
 print ("position du via en m sur axe W (Yf) W/2 : ", Yf)
