@@ -8,7 +8,6 @@ print("entrer la frequence en MHz")
 Fr = float(input()) * 1000000.0
 print("entrer l'epaisseur du dielectrique en mm")
 h = float(input()) / 1000.0 # h=0.0035 epaisseur du cuivre sur dielectric FR4
-K0 = 2 * pi * (Fr/c)
 
 def Lambda():
     return c/(Fr * sqrt(Er))
@@ -18,8 +17,6 @@ print ("Longueur d'onde corrigée (m): ", Lambda())
 print ("Longueur d'onde (m): ", c/Fr)
 
 W = (c/(2 * Fr)) * sqrt(2 / (Er + 1))
-
-print ("Rapport W/h : ", W/h)
 
 Ereff = ((Er + 1)/2.0) + (((Er - 1)/2.0) * pow (1 + ((12.0 * h)/W), -(0.5)))
 print ("Effective Dielectric Ereff", Ereff)
@@ -40,16 +37,18 @@ print ("Lg (plan de masse)en mm : ", Lg * 1000)
 Wg = 6.0 * h + W
 print ("Wg (plan de masse) en mm : ", Wg * 1000)
 
-Rb = 76 * ((Ereff * Ereff)/(Ereff - 1))
-print ("Resistance de bord Rb : ", Rb)
+Wrelle = W - 0.060 # modification pour adaptation
+G1 = Wrelle/(120.0 * Lambda())
+Rin = 1/(2 * G1)
+print ("Impedance d'entrée Rin (avec W - 0.06m): ",Rin)
 
-Xf2 = (L/pi * acos(sqrt(3)/3))
-print ("position de l'insersion en mm sur axe L (Xf) a partir du milieu :", Xf2 * 1000)
+Rpos = 50.0 # calcul du point d'insersion pour Z = 50 ohms
+Xf = (L/pi * acos(sqrt(Rpos/Rin)))
+print ("position de l'insersion en mm sur axe L (Xf) a partir du milieu :", Xf * 1000)
 
-y = Xf2
-Beta = (2 * pi) / Lambda()
-Rin = Rb * (sin(Beta * y) * sin(Beta * y))
-print ("Resistance Rin : ", Rin)
+X = 0.083
+Rpos = Rin * (cos((pi * X)/L) * cos((pi * X)/L))
+print ("Resistance fct du point d'insersion :", Rpos)
 
 #impedance de la ligne de transmission
 Z1 = sqrt(50 * Rin)
