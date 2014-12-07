@@ -10,10 +10,10 @@ print("entrer l'epaisseur du dielectrique en mm")
 h = float(input()) / 1000.0 # h=0.0035 epaisseur du cuivre sur dielectric FR4
 K0 = 2 * pi * (Fr/c)
 
-def Lamda():
+def Lambda():
     return c/(Fr * sqrt(Er))
 
-print ("Longueur d'onde corrigée (m): ", Lamda())
+print ("Longueur d'onde corrigée (m): ", Lambda())
 
 print ("Longueur d'onde (m): ", c/Fr)
 
@@ -40,14 +40,19 @@ print ("Lg (plan de masse)en mm : ", Lg * 1000)
 Wg = 6.0 * h + W
 print ("Wg (plan de masse) en mm : ", Wg * 1000)
 
-Xf2 = (L/pi * acos(sqrt(3)/3))
-print ("position de l'insersion en mm sur axe L (Xf) a partir du bord : ", Xf2 * 1000)
+Rb = 76 * ((Ereff * Ereff)/(Ereff - 1))
+print ("Resistance de bord Rb : ", Rb)
 
-Z = 300.0 * (cos((pi * Xf2)/L) * cos((pi * Xf2)/L))
-print ("Impedance du patch: ", Z)
+Xf2 = (L/pi * acos(sqrt(3)/3))
+print ("position de l'insersion en mm sur axe L (Xf) a partir du milieu :", Xf2 * 1000)
+
+y = Xf2
+Beta = (2 * pi) / Lambda()
+Rin = Rb * (sin(Beta * y) * sin(Beta * y))
+print ("Resistance Rin : ", Rin)
 
 #impedance de la ligne de transmission
-Z1 = sqrt(50 * Z)
+Z1 = sqrt(50 * Rin)
 print ("Impedance de la ligne: ", Z1)
 
 Yf = W / 2
