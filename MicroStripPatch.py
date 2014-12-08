@@ -37,6 +37,10 @@ print ("Lg (plan de masse)en mm : ", Lg * 1000)
 Wg = 6.0 * h + W
 print ("Wg (plan de masse) en mm : ", Wg * 1000)
 
+# calcul suivant tirés de
+# cours_antennes_outils_modeles_transmission_oct14_v3
+# Alexandre Boyer
+
 Wrelle = W - 0.060 # modification pour adaptation
 G1 = Wrelle/(120.0 * Lambda())
 Rin = 1/(2 * G1)
